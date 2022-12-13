@@ -1,15 +1,26 @@
 from uuid import UUID
 
-from rengu.io import RenguOutput, with_templating
 
-import typetree
+import dataclasses
+import typing as ty
 
-class RenguOutputTypetree(RenguOutput):
+from docarray import dataclass
+from docarray.typing import Image, Text
 
-    @with_templating
-    def __call__(self, obj: UUID | dict):
-        
-        tree = typetree.Tree(obj)
+@dataclass
+class RenguRecord:
 
-        print(tree.to_string(obj), file=self.fd, flush=True)
+    _id: UUID
+    _desc: Text | None
+
+@dataclass
+class Work(RenguRecord):
+
+    title = _desc
+
+@dataclass
+class Fragment(RenguRecord):
+
+    title = _desc
+
 
